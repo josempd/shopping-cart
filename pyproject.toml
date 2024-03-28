@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "shopping-cart"
+version = "0.1.0"
+description = "a shopping cart API with in-house data models, classes and persistence."
+authors = ["josempd"]
+license = "GNU GENERAL PUBLIC LICENSE"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.110.0"
+SQLAlchemy = "^2.0.29"
+uvicorn = "^0.29.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.7.0"
+ruff = "^0.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
