@@ -1,6 +1,6 @@
 # Technical Test for Backend Developer at BlueQuo
 
-## Requirements
+## **Requirements**
 
 We need to develop a shopping cart (API only). The system must allow adding items to the cart, modifying their quantity, and removing any item, in addition to allowing the retrieval of the cart's invoice with the totals and subtotals for each item.
 
@@ -17,7 +17,7 @@ At all times, it must control the stock of each of the items, prohibiting the ad
 
 We have two types of items: events and products. Both types have specific attributes but share the attributes of price, name, thumbnail, and description.
 
-## Implementation
+## **Implementation**
 
 - Design data model, classes, and persistence.
 - Design of the URL structure or API schema explaining the behavior of each endpoint.
@@ -31,3 +31,31 @@ The following points will be valued:
 - Although not essential, the use of the Python language will be valued.
 
 Document the entire process and comment on the weak points, problems you have had, and how you would improve the system. It is not necessary to complete the entire test, but an explanation of how it would have been implemented will be valued.
+
+---
+
+## **Tech stack**
+
+Defining a clear tech stack is important for project clarity and ease of development. This is also a core piece of the documentation and enables to have a proper feedback loop if necessary.
+
+### **Core**
+
+**Package Manager**: Poetry.
+
+**Framework**: FastAPI.
+
+**Database System**: PostgreSQL.
+
+**ORM**: SQLAlchemy.
+
+### **Testing**
+
+**Unit Testing**: Pytest for writing test suites.
+
+**Integration Testing**: TestClient from FastAPI.
+
+### **Containerization & Virtualization**
+
+**Containerization**: Docker.
+
+**Container Orchestration**: Docker Compose.
