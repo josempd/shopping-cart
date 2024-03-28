@@ -59,3 +59,42 @@ Defining a clear tech stack is important for project clarity and ease of develop
 **Containerization**: Docker.
 
 **Container Orchestration**: Docker Compose.
+
+### **Initial setup**
+
+First we should setup the local environment:
+
+```
+python3 -m venv .venv
+```
+And to run it:
+```
+source .venv/bin/activate
+```
+Also, we can install pipx and then install poetry, for our package management:
+```
+pip install pipx
+```
+```
+pipx install poetry
+```
+
+With poetry installed we can now start installing dependencies and setting up the necessary directories for the project:
+- add dev dependencies:
+    - ruff
+    - pre-commit
+
+- add project dependencies:
+    - add fastapi
+    - add uvicorn
+    - add sqlalchemy
+
+more dependencies will be added as needed.
+
+### **Setup a base dockerfile and docker-compose**
+
+The main two steps to guarantee virtualization of the app:
+
+- Setting up a base dockerfile that has python, install poetry and setup the files in a container to make the app available to a docker-compose orchestrator.
+
+- Setting up a docker-compose file with a postgres database with volumes to guarantee persistance, proper environment variables and that also includes the base image for the FastAPI server
