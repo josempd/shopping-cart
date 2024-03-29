@@ -98,3 +98,40 @@ The main two steps to guarantee virtualization of the app:
 - Setting up a base dockerfile that has python, install poetry and setup the files in a container to make the app available to a docker-compose orchestrator.
 
 - Setting up a docker-compose file with a postgres database with volumes to guarantee persistance, proper environment variables and that also includes the base image for the FastAPI server
+
+### **Directory structure**
+
+The proposed directory structure is the following, as it's simple and straightforward:
+
+```
+bluequo-challenge/
+│
+├── app/                    # Application specific components
+│   ├── __init__.py         # Makes app a Python package
+│   ├── main.py             # FastAPI application instance, routes, and startup events
+│   ├── models.py           # SQLAlchemy models
+│
+├── .gitignore              # gitignore file
+├── .pre-commit-config.yaml # pre-commit config file
+├── .env                    # env file with secret values
+├── Dockerfile              # Container specification
+├── LICENSE                 # License agreement
+├── poetry.lock             # Project dependencies
+├── pyproject.toml          # Project dependencies
+└── README.md               # Project overview and instructions
+```
+
+This structure will be updated overtime as the project advances.
+
+### **Defining data models**
+
+The models are defined using the declarative system, which allows the structure of the database to be described in Python code.
+
+- Base Model: At the beginning, Base is created using declarative_base(). This serves as a base class for all models, allowing them to be automatically mapped to a database table.
+- Item Model: Represents a generic item. It's designed to be a base class for more specific types of items.
+- Product Model: Inherits from Item. It's a more specific type of item.
+- Event Model: Another subclass of Item, representing an event, which is a different type of item.
+- Cart Model: Represents a shopping cart.
+- CartItem Model: Represents a many-to-many relationship between Cart and Item through an association table.
+
+The data model will be refined as the project advances.
