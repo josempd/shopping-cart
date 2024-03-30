@@ -1,6 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
-
+# Install PostgreSQL client
+RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
 # Set the working directory in the container
 WORKDIR /app
 
@@ -14,8 +15,8 @@ COPY pyproject.toml poetry.lock* /app/
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 
-# Copy the rest of your application's code
 COPY . /app
 
-# Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
+COPY wait-for-db.sh entrypoint.sh ./
+
+ENTRYPOINT ["./entrypoint.sh"]
