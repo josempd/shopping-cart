@@ -88,6 +88,8 @@ With poetry installed we can now start installing dependencies and setting up th
     - add fastapi
     - add uvicorn
     - add sqlalchemy
+    - add python-dotenv
+    - add psycopg2-binary
 
 more dependencies will be added as needed.
 
@@ -135,3 +137,14 @@ The models are defined using the declarative system, which allows the structure 
 - CartItem Model: Represents a many-to-many relationship between Cart and Item through an association table.
 
 The data model will be refined as the project advances.
+
+### **Setting up the database**
+
+After the models are defined, then we can setup the database adapted to the model, doing the following:
+
+- Updating models.py to adapt to latest sqlalchemy typing recommendations
+- Create a database.py script that will use the sqlalchemy engine and the models to access the database
+- creating an init_db.py script that creates the connection instance
+- Creating a wait-for-db script so the backend service waits for the database to be ready to accept connections
+- Setting up an entrypoint script to run everything
+- Fixing the Dockerfile, pyproject and docker-compose to properly run around the entrypoint script
