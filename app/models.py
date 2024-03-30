@@ -1,44 +1,48 @@
-from sqlalchemy import Column, Float, ForeignKey, Integer, String
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Float, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship
 
 Base = declarative_base()
 
 
 class Item(Base):
-    __tablename__: str = "item"
-    id: Column = Column(Integer, primary_key=True)
-    name: Column = Column(String, index=True)
-    price: Column = Column(Float)
-    description: Column = Column(String)
-    thumbnail: Column = Column(String)
-    stock: Column = Column(Integer, default=0)
-    type: Column = Column(String)
+    __tablename__ = "item"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String, index=True)
+    price: Mapped[float] = mapped_column(Float)
+    description: Mapped[str] = mapped_column(String)
+    thumbnail: Mapped[str] = mapped_column(String)
+    stock: Mapped[int] = mapped_column(Integer, default=0)
+    type: Mapped[str] = mapped_column(String)
 
-    __mapper_args__: dict = {"polymorphic_identity": "item", "polymorphic_on": type}
+    __mapper_args__ = {"polymorphic_identity": "item", "polymorphic_on": type}
 
 
 class Product(Item):
-    __mapper_args__: dict = {
+    __mapper_args__ = {
         "polymorphic_identity": "product",
     }
 
 
 class Event(Item):
-    __mapper_args__: dict = {
+    __mapper_args__ = {
         "polymorphic_identity": "event",
     }
 
 
 class Cart(Base):
-    __tablename__: str = "cart"
-    id: Column = Column(Integer, primary_key=True)
-    items: relationship = relationship("CartItem", back_populates="cart")
+    __tablename__ = "cart"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    items: Mapped[list["CartItem"]] = relationship("CartItem", back_populates="cart")
 
 
 class CartItem(Base):
-    __tablename__: str = "cart_item"
-    cart_id: Column = Column(Integer, ForeignKey("cart.id"), primary_key=True)
-    item_id: Column = Column(Integer, ForeignKey("item.id"), primary_key=True)
-    quantity: Column = Column(Integer)
-    cart: relationship = relationship("Cart", back_populates="items")
-    item: relationship = relationship("Item")
+    __tablename__ = "cart_item"
+    cart_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("cart.id"), primary_key=True
+    )
+    item_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("item.id"), primary_key=True
+    )
+    quantity: Mapped[int] = mapped_column(Integer)
+    cart: Mapped["Cart"] = relationship("Cart", back_populates="items")
+    item: Mapped["Item"] = relationship("Item")
