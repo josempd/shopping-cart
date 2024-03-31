@@ -1,4 +1,4 @@
-# Technical Test for Backend Developer at BlueQuo
+# Shopping Cart
 
 ## **Requirements**
 
