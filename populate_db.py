@@ -103,8 +103,11 @@ def add_items_to_db(items, db_session):
 
 def main():
     db = SessionLocal()
-    items = create_items(item_data)
-    add_items_to_db(items, db)
+    if db.query(Item).count() == 0:
+        items = create_items(item_data)
+        add_items_to_db(items, db)
+    else:
+        db.close()
 
 
 if __name__ == "__main__":
