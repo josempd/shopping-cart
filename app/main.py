@@ -74,7 +74,7 @@ def read_cart(cart_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/carts/{cart_id}/items", response_model=schemas.CartItemDisplay)
-def add_item_to_cart_endpoint(
+def add_item_to_cart(
     cart_id: int, cart_item: schemas.CartItemCreate, db: Session = Depends(get_db)
 ):
     return crud.add_item_to_cart(db=db, cart_id=cart_id, cart_item_data=cart_item)
@@ -91,7 +91,7 @@ def delete_cart(cart_id: int, db: Session = Depends(get_db)):
 
 
 @app.delete("/carts/{cart_id}/items", status_code=200)
-def remove_item_from_cart_endpoint(
+def remove_item_from_cart(
     cart_id: int,
     remove_request: schemas.CartItemRemoveRequest,
     db: Session = Depends(get_db),
