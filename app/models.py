@@ -19,13 +19,13 @@ class Item(Base):
 
 class Product(Item):
     __mapper_args__ = {
-        "polymorphic_identity": "product",
+        "polymorphic_identity": "Product",
     }
 
 
 class Event(Item):
     __mapper_args__ = {
-        "polymorphic_identity": "event",
+        "polymorphic_identity": "Event",
     }
 
 
