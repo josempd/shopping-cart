@@ -24,6 +24,10 @@ class ItemDisplay(BaseModel):
         orm_mode = True
 
 
+class CartCreate(BaseModel):
+    pass
+
+
 class CartItemCreate(BaseModel):
     item_id: int
     quantity: int
