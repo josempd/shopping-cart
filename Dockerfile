@@ -16,6 +16,9 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 
 COPY . /app
+COPY . /domain
+COPY . /infrastructure
+COPY . /schemas
 
 COPY wait-for-db.sh entrypoint.sh ./
 

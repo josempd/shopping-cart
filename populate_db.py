@@ -1,5 +1,5 @@
-from app.database import SessionLocal
-from app.models import Item
+from infrastructure.database import SessionLocal
+from domain.models import Item
 
 item_data = [
     # Products
@@ -8,7 +8,7 @@ item_data = [
         "price": 20.00,
         "description": "Stay hydrated in style with our durable and sustainable water bottle.",
         "thumbnail": "thumbnail_bottle.jpg",
-        "stock": 30,
+        "stock": 3,
         "type": "Product",
     },
     {
@@ -16,7 +16,7 @@ item_data = [
         "price": 89.99,
         "description": "Experience crystal-clear sound without distractions.",
         "thumbnail": "thumbnail_headphones.jpg",
-        "stock": 15,
+        "stock": 5,
         "type": "Product",
     },
     {
@@ -24,7 +24,7 @@ item_data = [
         "price": 45.00,
         "description": "Find your zen with our eco-friendly and comfortable yoga mat.",
         "thumbnail": "thumbnail_yogamat.jpg",
-        "stock": 20,
+        "stock": 2,
         "type": "Product",
     },
     {
@@ -32,7 +32,7 @@ item_data = [
         "price": 15.50,
         "description": "Start your day right with our premium, ethically sourced coffee beans.",
         "thumbnail": "thumbnail_coffee.jpg",
-        "stock": 50,
+        "stock": 5,
         "type": "Product",
     },
     {
@@ -40,7 +40,7 @@ item_data = [
         "price": 120.00,
         "description": "Grow fresh herbs all year round with our automated indoor garden.",
         "thumbnail": "thumbnail_herbgarden.jpg",
-        "stock": 10,
+        "stock": 1,
         "type": "Product",
     },
     # Events
@@ -49,7 +49,7 @@ item_data = [
         "price": 50.00,
         "description": "Enhance your programming skills in our interactive coding workshop.",
         "thumbnail": "thumbnail_codingworkshop.jpg",
-        "stock": 100,
+        "stock": 10,
         "type": "Event",
     },
     {
@@ -57,7 +57,7 @@ item_data = [
         "price": 75.00,
         "description": "Capture the beauty of nature with tips from our expert photographer.",
         "thumbnail": "thumbnail_photography.jpg",
-        "stock": 30,
+        "stock": 3,
         "type": "Event",
     },
     {
@@ -65,7 +65,7 @@ item_data = [
         "price": 40.00,
         "description": "Discover and taste fine wines from the comfort of your home.",
         "thumbnail": "thumbnail_winetasting.jpg",
-        "stock": 50,
+        "stock": 5,
         "type": "Event",
     },
     {
@@ -73,7 +73,7 @@ item_data = [
         "price": 0.00,
         "description": "Learn about sustainable living practices in our free webinar.",
         "thumbnail": "thumbnail_sustainable.jpg",
-        "stock": 500,
+        "stock": 5,
         "type": "Event",
     },
     {
@@ -81,7 +81,7 @@ item_data = [
         "price": 25.00,
         "description": "Join our charity marathon and help raise funds for a good cause.",
         "thumbnail": "thumbnail_marathon.jpg",
-        "stock": 200,
+        "stock": 2,
         "type": "Event",
     },
 ]

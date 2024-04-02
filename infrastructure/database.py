@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Load environment variables from .env file
 load_dotenv()
 
 POSTGRES_USER = os.getenv("POSTGRES_USER")
@@ -20,7 +19,6 @@ engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
 @contextmanager
 def db_session():
     """Yields a new SQLAlchemy session and automatically closes it after use."""
@@ -29,3 +27,7 @@ def db_session():
         yield db
     finally:
         db.close()
+
+def get_db():
+    with db_session() as db:
+        yield db
