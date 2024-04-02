@@ -1,13 +1,10 @@
-from pydantic import BaseModel, Field
-
+from pydantic import BaseModel, Field, constr
+from typing import Optional, Union, List
 from .item import ItemDisplay
-
 
 class CartItemRemoveRequest(BaseModel):
     item_id: int = Field(..., description="The ID of the item to remove from the cart")
-    quantity: int | None = Field(
-        None, gt=0, description="The quantity of the item to remove"
-    )
+    quantity: Optional[int] = Field(None, gt=0, description="The quantity of the item to remove")
 
 
 class CartCreate(BaseModel):
