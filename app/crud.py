@@ -1,8 +1,14 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session, joinedload
 
-from . import models, schemas
-from .schemas import ItemCreate
+from schemas.cart import (
+    CartDisplay,
+    CartItemCreate,
+    CartItemDisplay,
+)
+from schemas.item import ItemCreate, ItemDisplay, ItemUpdate
+
+from . import models
 
 
 def create_item(db: Session, item: ItemCreate):
@@ -21,7 +27,7 @@ def get_items(db: Session):
     return db.query(models.Item).all()
 
 
-def update_item(db: Session, item_id: int, updated_item: schemas.ItemUpdate):
+def update_item(db: Session, item_id: int, updated_item: ItemUpdate):
     db_item = db.query(models.Item).filter(models.Item.id == item_id).first()
     if not db_item:
         return None
@@ -32,12 +38,15 @@ def update_item(db: Session, item_id: int, updated_item: schemas.ItemUpdate):
 
     db.commit()
     db.refresh(db_item)
+
+    db.commit()
+    db.refresh(db_item)
     return db_item
 
 
 def delete_items(db: Session, item_ids: int | list[int]):
     if isinstance(item_ids, int):
-        item_ids = [item_ids]
+        item_ids = [item_ids]  # Ensure item_ids is always a list
     db.query(models.Item).filter(models.Item.id.in_(item_ids)).delete(
         synchronize_session="fetch"
     )
@@ -70,10 +79,10 @@ def get_cart(db: Session, cart_id: int):
         subtotal = item.price * cart_item.quantity
         total_cost += subtotal
 
-        cart_item_data = schemas.CartItemDisplay(
+        cart_item_data = CartItemDisplay(
             item_id=item.id,
             quantity=cart_item.quantity,
-            item=schemas.ItemDisplay(
+            item=ItemDisplay(
                 id=item.id,
                 name=item.name,
                 price=item.price,
@@ -87,7 +96,7 @@ def get_cart(db: Session, cart_id: int):
         )
         cart_items_data.append(cart_item_data)
 
-    return schemas.CartDisplay(id=cart.id, items=cart_items_data, total=total_cost)
+    return CartDisplay(id=cart.id, items=cart_items_data, total=total_cost)
 
 
 def delete_cart(db: Session, cart_id: int):
@@ -112,10 +121,10 @@ def get_carts(db: Session):
             subtotal = item.price * cart_item.quantity
             total_cost += subtotal
 
-            cart_item_data = schemas.CartItemDisplay(
+            cart_item_data = CartItemDisplay(
                 item_id=item.id,
                 quantity=cart_item.quantity,
-                item=schemas.ItemDisplay(
+                item=ItemDisplay(
                     id=item.id,
                     name=item.name,
                     price=item.price,
@@ -129,15 +138,13 @@ def get_carts(db: Session):
             )
             cart_items_data.append(cart_item_data)
 
-        cart_data = schemas.CartDisplay(
-            id=cart.id, items=cart_items_data, total=total_cost
-        )
+        cart_data = CartDisplay(id=cart.id, items=cart_items_data, total=total_cost)
         carts_data.append(cart_data)
 
     return carts_data
 
 
-def add_item_to_cart(db: Session, cart_id: int, cart_item_data: schemas.CartItemCreate):
+def add_item_to_cart(db: Session, cart_id: int, cart_item_data: CartItemCreate):
     item = (
         db.query(models.Item).filter(models.Item.id == cart_item_data.item_id).first()
     )
