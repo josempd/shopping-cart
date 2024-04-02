@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-from app.models import Base
+from domain.models import Base
 
 load_dotenv()
 
