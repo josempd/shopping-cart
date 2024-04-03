@@ -1,6 +1,4 @@
 from fastapi import Depends, FastAPI, HTTPException
-from fastapi.responses import JSONResponse
-from sqlalchemy.orm import Session
 
 from schemas.cart import (
     CartDisplay,
@@ -8,17 +6,14 @@ from schemas.cart import (
     CartItemDisplay,
     CartItemRemoveRequest,
 )
-from schemas.item import ItemCreate, ItemDeleteRequest, ItemDisplay, ItemUpdate
+from schemas.item import ItemCreate, ItemDisplay, ItemUpdate
 
 from typing import List
 
-from domain.models import Item
-
-from infrastructure.database import db_session
 from infrastructure.repository import ItemRepository
 from domain.repo_interfaces import IItemRepository, ICartRepository
-from app.dependencies import get_item_repository, get_cart_repository, get_cart_service
-from domain.service import CartService
+from app.dependencies import get_item_repository, get_item_service, get_cart_repository, get_cart_service
+from domain.service import ItemService,CartService
 
 app = FastAPI()
 
@@ -27,9 +22,8 @@ async def root():
     return {"message": "Hello World! If you can read this, the project is ready to use at http://0.0.0.0:8000/docs"}
 
 @app.post("/item/", response_model=ItemDisplay)
-def create_item(item_data: ItemCreate, item_repo: IItemRepository = Depends(get_item_repository)):
-    item = Item(name=item_data.name, description=item_data.description, price=item_data.price, thumbnail=item_data.thumbnail, stock=item_data.stock, type=item_data.type)
-    created_item = item_repo.create(item)
+def create_item(item_data: ItemCreate, item_service: ItemService = Depends(get_item_service)):
+    created_item = item_service.create_item(item_data)
     return created_item
 
 
@@ -48,8 +42,8 @@ def get_single_item(item_id: int, item_repo: IItemRepository = Depends(get_item_
 
 
 @app.put("/item/{item_id}", response_model=ItemDisplay)
-def update_item(item_id: int, item_update: ItemUpdate, item_repo: IItemRepository = Depends(get_item_repository)):
-    updated_item = item_repo.update(item_id=item_id, item_data=item_update.dict(exclude_unset=True))
+def update_item(item_id: int, item_update: ItemUpdate, item_service: ItemService = Depends(get_item_service)):
+    updated_item = item_service.update_item(item_id=item_id, item_data=item_update)
     if updated_item is None:
         raise HTTPException(status_code=404, detail="Item not found")
     return updated_item

@@ -1,8 +1,36 @@
 from typing import Optional, List
 from fastapi import HTTPException
-from domain.models import CartItem
+from domain.models import Item, CartItem
 from schemas.cart import CartItemDisplay, CartDisplay
+from schemas.item import ItemCreate, ItemDisplay, ItemUpdate
 from domain.repo_interfaces import ICartRepository, IItemRepository
+
+class ItemService:
+    def __init__(self, item_repo: IItemRepository):
+        self.item_repo = item_repo
+
+    def create_item(self, item_data: ItemCreate) -> ItemDisplay:
+        if item_data.type not in ["Event", "Product"]:
+            raise HTTPException(status_code=400, detail="Item type must be either 'Event' or 'Product'")
+
+        item = Item(
+            name=item_data.name,
+            description=item_data.description,
+            price=item_data.price,
+            thumbnail=item_data.thumbnail,
+            stock=item_data.stock,
+            type=item_data.type
+        )
+        created_item = self.item_repo.create(item)
+        return created_item
+
+    def update_item(self, item_id: int, item_data: ItemUpdate) -> ItemDisplay:
+        if item_data.type not in ["Event", "Product"]:
+            raise HTTPException(status_code=400, detail="Item type must be either 'Event' or 'Product'")
+
+        item_dict = item_data.model_dump()
+        updated_item = self.item_repo.update(item_id, item_dict)
+        return updated_item
 
 class CartService:
     def __init__(self, cart_repository: ICartRepository, item_repository: IItemRepository):
