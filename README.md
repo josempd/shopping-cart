@@ -202,11 +202,11 @@ After the models are defined, then we can setup the database adapted to the mode
 - Setting up an entrypoint script to run everything
 - Fixing the Dockerfile, pyproject and docker-compose to properly run around the entrypoint script
 
-## Defining the platform architecture **
+### **Defining the platform architecture**
 
 The original setup was really basic so now we have a refactor setup that follows DDD architecture (Domain Driven Design) this allows the platform to have separation of concerns, the database operations are decoupled from the API calls, and the service logic is isolated from the database, we could in theory be able to change the database without any change on the logic (In fact we do this in the tests). This allows the backend application to be more readable, scalable and robust.
 
-## ** Describing the project **
+### **Describing the project**
 
 The endpoints are defined in the main/app.py file where they follow pydantic schemes and use the main/dependencies.py file to operate the logic or to communicate with the DB.
 
@@ -221,7 +221,7 @@ The infrastructure directory has the DB handlers and all the interfaces to opera
 
 The schemas directory has the definitions of the pydantic models used by FastAPI to generate responses.
 
-## **Improvements**
+### **Improvements**
 
 Testing, error handling and logging are the three main points that can be improved.
 
