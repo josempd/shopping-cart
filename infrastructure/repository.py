@@ -4,9 +4,6 @@ from domain.repo_interfaces import IItemRepository, ICartRepository
 from domain.models import Base
 from typing import List, Optional
 
-from domain.service import CartService
-from fastapi import HTTPException
-
 class ItemRepository(IItemRepository):
     def __init__(self, db_session: Session):
         self.db_session = db_session
@@ -27,8 +24,9 @@ class ItemRepository(IItemRepository):
         if item:
             for key, value in item_data.items():
                 setattr(item, key, value)
-            self.db_session.commit()
+            self.db_session.flush()
             return item
+        self.db_session.commit()
         return None
 
     def delete(self, item_id: int) -> None:

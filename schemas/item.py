@@ -29,7 +29,7 @@ class ItemUpdate(BaseModel):
     description: Optional[constr(min_length=1)] = Field(default=None, description="A description of the item")
     thumbnail: Optional[constr(min_length=1)] = Field(default=None, description="URL to an image of the item")
     stock: Optional[int] = Field(default=None, description="How many of these items are in stock")
-    type: Optional[constr(min_length=1)] = Field(default=None, description="The type of the item (Product or Event)")
+    type: Optional[constr(min_length=1)] = Field(default="Product", description="The type of the item (Product or Event)")
 
     class Config:
         min_anystr_length = 1
